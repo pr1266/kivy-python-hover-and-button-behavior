@@ -4,6 +4,8 @@ from kivy.uix.behaviors import FocusBehavior
 from kivy.uix.recycleview import RecycleView
 from kivy.uix.scrollview import ScrollView
 from kivy.uix.behaviors import ButtonBehavior
+from kivy.uix.label import Label
+from kivy.core.window import Window
 from kivy.properties import (
     BooleanProperty, StringProperty,
      NumericProperty, ObjectProperty
@@ -50,27 +52,38 @@ class A(BoxLayout, HoverBehavior, ButtonBehavior):
 
         super().__init__(**kwargs)
         self.name = name
-
+        self.add_widget(Label(text = str(name)))
     def on_enter(self):
 
         for i in self.children:
 
-            i.color = (1, 1, 1, 1)
+            i.color = (1, 0, 0, 1)
     
     def on_leave(self):
 
         for i in self.children:
 
-            i.color = (.06, .45, .45, 1)
+            i.color = (0, 1, 0, 1)
 
     def on_release(self):
+        
         print(self.name)
         
+class B(BoxLayout):
+
+    def __init__(self, **kwargs):
+
+        super().__init__(**kwargs)
+
+        for i in range(10):
+
+            self.add_widget(A(name = str(i)))
+
 class myApp(App):
 
     def build(self):
 
-        return A('salam')
+        return B()
 
 if __name__ == '__main__':
 
