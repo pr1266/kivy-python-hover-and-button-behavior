@@ -61,13 +61,14 @@ class HoverBehavior(object):
     def on_leave(self):
         pass
 
-class A(BoxLayout, HoverBehavior, ButtonBehavior):
+class A(ButtonBehavior, BoxLayout ,HoverBehavior):
 
     def __init__(self, name, **kwargs):
 
         super().__init__(**kwargs)
         self.name = name
         self.add_widget(Label(text = str(name)))
+        print(self.name)
 
     def on_enter(self):
 
@@ -83,9 +84,9 @@ class A(BoxLayout, HoverBehavior, ButtonBehavior):
 
     def on_release(self):
 
-        # content = Label(text = self.name)
-        # self.popup = Popup(content = content, size_hint = (.6, .8), title = '')
-        # self.popup.open()
+        content = Label(text = self.name)
+        self.popup = Popup(content = content, size_hint = (.6, .8), title = '')
+        self.popup.open()
         print(self.name)
         
 class B(BoxLayout):
