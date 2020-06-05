@@ -5,11 +5,28 @@ from kivy.uix.recycleview import RecycleView
 from kivy.uix.scrollview import ScrollView
 from kivy.uix.behaviors import ButtonBehavior
 from kivy.uix.label import Label
+from kivy.uix.popup import Popup
 from kivy.core.window import Window
 from kivy.properties import (
     BooleanProperty, StringProperty,
      NumericProperty, ObjectProperty
     )
+from kivy.lang import Builder
+
+Builder.load_string("""
+
+<A>:
+    canvas.before:
+        Color:
+            rgba: (1, 1, 1, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+<B>:
+    orientation: 'vertical'
+
+""")
 
 class HoverBehavior(object):
 
@@ -44,8 +61,6 @@ class HoverBehavior(object):
     def on_leave(self):
         pass
 
-
-
 class A(BoxLayout, HoverBehavior, ButtonBehavior):
 
     def __init__(self, name, **kwargs):
@@ -53,6 +68,7 @@ class A(BoxLayout, HoverBehavior, ButtonBehavior):
         super().__init__(**kwargs)
         self.name = name
         self.add_widget(Label(text = str(name)))
+
     def on_enter(self):
 
         for i in self.children:
@@ -66,7 +82,10 @@ class A(BoxLayout, HoverBehavior, ButtonBehavior):
             i.color = (0, 1, 0, 1)
 
     def on_release(self):
-        
+
+        # content = Label(text = self.name)
+        # self.popup = Popup(content = content, size_hint = (.6, .8), title = '')
+        # self.popup.open()
         print(self.name)
         
 class B(BoxLayout):
@@ -77,7 +96,7 @@ class B(BoxLayout):
 
         for i in range(10):
 
-            self.add_widget(A(name = str(i)))
+            self.add_widget(A(name = str(i), size_hint_y = .1))
 
 class myApp(App):
 
